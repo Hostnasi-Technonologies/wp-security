@@ -4,7 +4,7 @@ Tags: security, hardening, firewall, login protection, WordPress security
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 
 Step-by-step WordPress security hardening by Hostnasi Technologies.
@@ -71,6 +71,10 @@ Yes — it's designed for hosting providers to deploy across client WordPress in
 
 == Changelog ==
 
+= 1.0.2 =
+* Added visible plugin version in the admin dashboard header.
+* Release metadata bump.
+
 = 1.0.1 =
 * Removed the "PHP execution blocked in /uploads/" hardening item from checks and one-click fixes.
 
@@ -78,6 +82,9 @@ Yes — it's designed for hosting providers to deploy across client WordPress in
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.0.2 =
+Adds an in-dashboard version label and updates release metadata.
 
 = 1.0.1 =
 Removes the uploads PHP execution block hardening item to avoid compatibility issues.

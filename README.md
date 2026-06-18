@@ -1,9 +1,9 @@
 # WP Hostnasi Security Hardening
 
 > **Step-by-step WordPress security hardening by [Hostnasi Technologies](https://hostnasi.com)**  
-> Version 1.0.0 · Requires WordPress 6.0+ · PHP 8.0+
+> Version 1.0.2 · Requires WordPress 6.0+ · PHP 8.0+
 
-A WordPress plugin that scans your site against 22 industry-standard security checks, shows a live 0–100% security score, and fixes 15 of those checks automatically — no technical knowledge required.
+A WordPress plugin that scans your site against 21 industry-standard security checks, shows a live 0–100% security score, and fixes 14 of those checks automatically — no technical knowledge required.
 
 ---
 
@@ -32,13 +32,13 @@ A WordPress plugin that scans your site against 22 industry-standard security ch
 
 ## Why This Plugin
 
-A freshly installed WordPress site with default settings typically passes **fewer than 5** of these 22 checks. WordPress powers 43% of the web, making it the most targeted platform for automated attacks. This plugin closes the most common gaps in minutes.
+A freshly installed WordPress site with default settings typically passes **fewer than 5** of these 21 checks. WordPress powers 43% of the web, making it the most targeted platform for automated attacks. This plugin closes the most common gaps in minutes.
 
 ```
 Default WordPress site       After Hostnasi Security
 ────────────────────────     ──────────────────────────
 Score: ~18%  ██░░░░░░░░     Score: 85%+  ████████░░
-3–4 checks passing           18–22 checks passing
+3–4 checks passing           17–21 checks passing
 ```
 
 ---
@@ -49,11 +49,11 @@ Score: ~18%  ██░░░░░░░░     Score: 85%+  ██████�
 |---|---|---|
 | Authentication & login | 4 | 3 |
 | wp-config.php hardening | 5 | 3 |
-| File & directory permissions | 4 | 4 |
+| File & directory permissions | 3 | 3 |
 | Updates & plugins | 4 | 1 |
 | HTTP security headers | 3 | 3 |
 | Information leakage | 3 | 3 |
-| **Total** | **22** | **15** |
+| **Total** | **21** | **14** |
 
 **Built-in features (no third-party plugins needed):**
 
@@ -64,7 +64,7 @@ Score: ~18%  ██░░░░░░░░     Score: 85%+  ██████�
 - User enumeration block (`/?author=` and REST API `/wp/v2/users`)
 - WordPress version hiding (meta tags, feeds, asset query strings)
 - wp-config.php constant patching (DISALLOW_FILE_EDIT, FORCE_SSL_ADMIN, WP_DEBUG)
-- .htaccess hardening (PHP block in uploads, directory listing, sensitive file protection)
+- .htaccess hardening (directory listing, sensitive file protection)
 - wp-config.php permission fix (chmod 440)
 - readme.html deletion
 
@@ -247,23 +247,6 @@ On shared hosting, other users on the same server can read world-readable files.
 
 ---
 
-#### PHP execution blocked in /uploads/
-**Severity:** Critical | **Auto-fix:** Yes
-
-Attackers upload malicious `.php` files disguised as images through vulnerable plugins, then rename or directly access them. Blocking PHP execution in the uploads directory breaks this entire attack chain.
-
-**What the fix does:** Writes to `wp-content/uploads/.htaccess`:
-
-```apache
-# HNS_BLOCK_PHP_UPLOADS
-<Files *.php>
-deny from all
-</Files>
-php_flag engine off
-```
-
----
-
 #### Directory listing disabled
 **Severity:** High | **Auto-fix:** Yes
 
@@ -443,7 +426,7 @@ All fixes are applied via a secure AJAX request from the dashboard:
 
 - Requests are verified with a WordPress **nonce** (`hns_fix`)
 - Only **administrator** users can trigger fixes
-- The fix callback is checked against a **whitelist** of 15 allowed method names before execution — no arbitrary code execution is possible
+- The fix callback is checked against a **whitelist** of 14 allowed method names before execution — no arbitrary code execution is possible
 
 ### wp-config.php patching
 
@@ -455,7 +438,7 @@ The file is written back with `LOCK_EX` to prevent race conditions. If the file 
 
 ### .htaccess patching
 
-Each `.htaccess` fix uses a named marker comment (e.g. `# HNS_BLOCK_PHP_UPLOADS`) to check for prior application. All `.htaccess` changes are **idempotent** — running the same fix twice will not create duplicate rules.
+Each `.htaccess` fix uses a named marker comment (e.g. `# HNS_NO_LISTING`) to check for prior application. All `.htaccess` changes are **idempotent** — running the same fix twice will not create duplicate rules.
 
 ### Login lockout
 
@@ -499,11 +482,6 @@ SELECT option_value FROM wp_options WHERE option_name = 'hns_login_slug';
 If your server runs Nginx, add these to your site's `server {}` block:
 
 ```nginx
-# Block PHP in uploads
-location ~* /wp-content/uploads/.*\.php$ {
-    deny all;
-}
-
 # Disable directory listing
 autoindex off;
 
@@ -596,7 +574,7 @@ hostnasi-security/
 ├── readme.txt                     # WordPress.org plugin readme
 ├── README.md                      # This file
 ├── includes/
-│   ├── class-hns-checks.php       # 22 check definitions + detection callbacks
+│   ├── class-hns-checks.php       # 21 check definitions + detection callbacks
 │   ├── class-hns-actions.php      # Auto-fix implementations
 │   └── class-hns-admin.php        # Dashboard UI, AJAX handler, runtime hooks
 └── assets/
@@ -625,15 +603,25 @@ All options are cleaned up on plugin deletion (add `uninstall.php` for productio
 
 ## Changelog
 
+### 1.0.2 — June 2026
+
+- Added visible plugin version in the admin dashboard header
+- Updated release metadata to 1.0.2
+
+### 1.0.1 — June 2026
+
+- Removed uploads PHP execution blocking check/fix from the hardening workflow
+- Updated checklist and release metadata
+
 ### 1.0.0 — June 2025
 
 - Initial release
-- 22 security checks across 6 categories
-- 15 one-click auto-fixes
+- 21 security checks across 6 categories
+- 14 one-click auto-fixes
 - Built-in login lockout (no external plugin required)
 - Hidden login URL with random slug generation
 - wp-config.php patching (DISALLOW_FILE_EDIT, FORCE_SSL_ADMIN, WP_DEBUG)
-- .htaccess hardening (PHP block in uploads, Options -Indexes, sensitive file protection)
+- .htaccess hardening (Options -Indexes, sensitive file protection)
 - HTTP security headers (X-Frame-Options, HSTS, Referrer-Policy, Permissions-Policy)
 - User enumeration blocking (author query + REST API)
 - WordPress version hiding (meta, feeds, asset URLs)

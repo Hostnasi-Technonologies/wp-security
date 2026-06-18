@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.2] - 2026-06-18
+
+### Added
+- Added a visible plugin version label in the admin dashboard header.
+- Added `WIKI.md` quick-reference documentation.
+
+### Changed
+- Bumped plugin version metadata to `1.0.2`.
+- Updated `README.md` and `readme.txt` to align with current checks/fixes and release notes.
+
 ## [1.0.1] - 2026-06-18
 
 ### Changed

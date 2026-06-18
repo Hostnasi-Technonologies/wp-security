@@ -92,7 +92,7 @@ class HNS_Admin {
             <div class="hns-logo">
                 <span class="hns-logo-icon dashicons dashicons-shield"></span>
                 <div>
-                    <div class="hns-logo-name">Hostnasi Security Hardening</div>
+                    <div class="hns-logo-name">Hostnasi Security Hardening <small style="opacity:.75;font-weight:600;">v' . esc_html( HNS_VERSION ) . '</small></div>
                     <div class="hns-logo-sub">Step-by-step WordPress protection by <a href="https://hostnasi.com" target="_blank">Hostnasi Technologies</a></div>
                 </div>
             </div>

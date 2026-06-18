@@ -3,7 +3,7 @@
  * Plugin Name: Hostnasi Security Hardening
  * Plugin URI:  https://hostnasi.com/security
  * Description: Step-by-step WordPress security hardening by Hostnasi Technologies. Enforces best practices and guides you through critical security fixes.
- * Version:     1.0.1
+ * Version:     1.0.2
  * Author:      Hostnasi Technologies
  * Author URI:  https://hostnasi.com
  * License:     GPL-2.0+
@@ -12,7 +12,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'HNS_VERSION',  '1.0.1' );
+define( 'HNS_VERSION',  '1.0.2' );
 define( 'HNS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'HNS_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'HNS_OPTION',   'hns_hardening_state' );
